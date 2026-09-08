@@ -1,0 +1,1 @@
+const v=()=>Number(document.getElementById('valor').value); const r=x=>document.getElementById('resultado').textContent=x; function mostrar(){r(v())} function suma1(){r(v()+1)} function cuadrado(){r(v()**2)} function doble(){r(v()*2)} function potencia(){r(2**v())}

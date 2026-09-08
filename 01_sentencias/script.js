@@ -1,0 +1,1 @@
+document.getElementById('salida').textContent='Texto 2. Mensaje escrito desde JavaScript utilizando el DOM.'; alert('3'); document.getElementById('salida2').textContent='Texto 5. Otra escritura aplicada al documento.';

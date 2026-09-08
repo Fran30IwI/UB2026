@@ -1,0 +1,1 @@
+const suma=(a,b)=>{const c=a+b; return c}; function ejecutar(){document.getElementById('resultado').textContent=suma(Number(a.value),Number(b.value))}

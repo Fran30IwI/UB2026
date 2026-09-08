@@ -1,0 +1,1 @@
+function saludar(){ document.getElementById('resultado').textContent='Hola. Esta es una escritura producida por un evento.'; }

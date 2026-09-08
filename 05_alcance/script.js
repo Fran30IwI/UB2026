@@ -1,0 +1,1 @@
+var global=0; function forzada(){ global=10; salida.textContent='Variable global: '+global; } function declarada(){ var local=20; salida.textContent='Variable local: '+local+' (fuera de la función no existe)'; }

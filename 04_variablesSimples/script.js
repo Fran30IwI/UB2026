@@ -1,0 +1,1 @@
+var a=2; var b='9'; var suma1=a+b; document.getElementById('salida').innerHTML='Valor de a: '+a+'<br>Tipo de a: '+typeof a+'<br>Valor de suma1: '+suma1+'<br>Tipo de suma1: '+typeof suma1;
