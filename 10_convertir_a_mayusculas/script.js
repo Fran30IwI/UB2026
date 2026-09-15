@@ -1,1 +1,0 @@
-function convertir(){document.getElementById('resultado').textContent=document.getElementById('texto').value.toUpperCase()}

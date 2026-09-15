@@ -1,1 +1,0 @@
-const n=id=>Number(document.getElementById(id).value); const set=x=>document.getElementById('r').value=x; function suma(){set(n('a')+n('b')+n('c'))} function promedio(){set((n('a')+n('b')+n('c'))/3)} function mayor(){set(Math.max(n('a'),n('b'),n('c')))}
