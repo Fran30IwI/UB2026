@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Aplicación Integrada - Facturas de Compra</title><style>
+:root{--bg:#101318;--panel:#191e27;--panel2:#222936;--accent:#4da3ff;--text:#f2f4f7;--muted:#aab3c2;--border:#343c4a}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#0e1116,#1a202b);color:var(--text)}
+header{padding:28px 20px;text-align:center;background:#151a22;border-bottom:1px solid var(--border)}
+h1{margin:0 0 8px;font-size:28px}.subtitle{color:var(--muted)}
+main{max-width:1100px;margin:30px auto;padding:0 18px}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:0 10px 30px #0005}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.full{grid-column:1/-1}
+label{display:block;margin-bottom:7px;color:#dce2eb;font-weight:bold}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel2);color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+textarea{min-height:90px;resize:vertical}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+button,a.btn{border:0;border-radius:8px;padding:11px 16px;background:var(--accent);color:#07111d;font-weight:bold;cursor:pointer;text-decoration:none}
+button.secondary,a.secondary{background:#303846;color:var(--text)}button:hover,a.btn:hover{filter:brightness(1.12)}
+.table-wrap{overflow:auto;margin-top:18px}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}th{background:#252c38;color:#dfe7f2}tr:hover td{background:#1e2530}
+.modal-bg{display:none;position:fixed;inset:0;background:#0009;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-bg.active{display:flex}.modal{width:min(700px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px}
+.home{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.home a{display:block;padding:24px;background:var(--panel);border:1px solid var(--border);border-radius:14px;color:var(--text);text-decoration:none}.home a:hover{border-color:var(--accent);transform:translateY(-2px)}small{color:var(--muted)}
+@media(max-width:700px){.grid,.home{grid-template-columns:1fr}.full{grid-column:auto}}
+</style></head><body><header><h1>Aplicación Integrada - Facturas de Compra</h1><div class="subtitle">Gestión de renglones de factura de compra</div></header><main><div class="card"><div class="actions"><button id="cargar">Cargar datos</button><button id="vaciar" class="secondary">Vaciar tabla</button><button id="nuevo">Nuevo renglón</button></div>
+<div class="table-wrap"><table><thead><tr><th>Factura</th><th>Producto</th><th>Descripción</th><th>Unidad</th><th>Cantidad</th><th>PrecioUnit</th><th>TotalRenglon</th><th>PDF</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+<div id="bg" class="modal-bg"><div class="modal"><h2>Alta de Nuevo Renglón</h2><form id="form"><div class="grid">
+<div><label>NroFactura</label><input id="f" required></div><div><label>Cod-Prod</label><input id="p" required></div>
+<div class="full"><label>Descripción producto-servicio</label><input id="d" required></div>
+<div><label>Unidad de medida</label><select id="u" required><option value="">Seleccione...</option></select></div>
+<div><label>Cantidad</label><input id="c" type="number" min="0" step="0.01" required></div>
+<div><label>PrecioUnit</label><input id="pu" type="number" min="0" step="0.01" required></div>
+<div><label>TotalRenglon</label><input id="t" readonly></div>
+<div><label>PdfComprobante</label><input id="pdf" type="file" accept=".pdf"></div>
+</div><div class="actions"><button type="button" id="close" class="secondary">Cerrar</button><button>Enviar</button></div></form></div></div></main><script>const datos=[
+{"factura":"0001","producto":"P001","descripcion":"Aceite","unidad":"Lt","cantidad":20,"precio":1500,"pdf":"factura0001.pdf"},
+{"factura":"0001","producto":"P002","descripcion":"Harina","unidad":"bls30kg","cantidad":10,"precio":8000,"pdf":"factura0001.pdf"},
+{"factura":"0002","producto":"P003","descripcion":"Leche","unidad":"caja2lts","cantidad":15,"precio":2200,"pdf":"factura0002.pdf"}
+];const unidades=[
+{"codUni":"LT","descripcion":"Lt"},
+{"codUni":"B30","descripcion":"bls30kg"},
+{"codUni":"B20","descripcion":"bls20kg"},
+{"codUni":"C2","descripcion":"caja2lts"}
+];const tbody=document.getElementById('tbody');const u=document.getElementById('u');
+unidades.forEach(x=>{let o=document.createElement('option');o.value=x.codUni;o.textContent=x.codUni+' - '+x.descripcion;u.appendChild(o)});
+function cargar(){tbody.innerHTML='';datos.forEach(x=>{let tr=document.createElement('tr');[x.factura,x.producto,x.descripcion,x.unidad,x.cantidad,'$ '+x.precio.toFixed(2),'$ '+(x.cantidad*x.precio).toFixed(2),x.pdf].forEach(v=>{let td=document.createElement('td');td.textContent=v;tr.appendChild(td)});tbody.appendChild(tr)})}
+document.getElementById('cargar').onclick=cargar;document.getElementById('vaciar').onclick=()=>tbody.innerHTML='';
+const bg=document.getElementById('bg');document.getElementById('nuevo').onclick=()=>bg.classList.add('active');document.getElementById('close').onclick=()=>bg.classList.remove('active');
+c.oninput=pu.oninput=()=>t.value=((+c.value||0)*(+pu.value||0)).toFixed(2);
+document.getElementById('form').onsubmit=e=>{e.preventDefault();if(e.target.checkValidity()){alert('Renglón registrado correctamente');e.target.reset();t.value='';bg.classList.remove('active')}else e.target.reportValidity()};</script></body></html>
