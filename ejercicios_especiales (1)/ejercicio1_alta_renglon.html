@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de Renglón de Factura</title>
+    <style>
+
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #101318; color: #f2f4f7; }
+        header { padding: 30px 20px; text-align: center; background: #191e27; border-bottom: 1px solid #343c4a; }
+        h1 { margin: 0 0 8px; }
+        .subtitulo { color: #aab3c2; }
+        main { max-width: 1100px; margin: 35px auto; padding: 0 20px; }
+        .card { background: #191e27; padding: 25px; border: 1px solid #343c4a; border-radius: 14px; }
+        .explicacion { color: #aab3c2; line-height: 1.5; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .completo { grid-column: 1 / -1; }
+        label { display: block; margin-bottom: 7px; font-weight: bold; }
+        input, select { width: 100%; padding: 11px; border: 1px solid #343c4a; border-radius: 8px; background: #222936; color: white; }
+        input:focus, select:focus { outline: none; border-color: #4da3ff; }
+        .acciones { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        button, .boton { padding: 11px 16px; border: none; border-radius: 8px; background: #4da3ff; color: #07111d; font-weight: bold; cursor: pointer; text-decoration: none; }
+        button.secundario, .boton.secundario { background: #303846; color: white; }
+        button:hover, .boton:hover { filter: brightness(1.1); }
+        .tabla { overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; min-width: 850px; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #343c4a; text-align: left; }
+        th { background: #252c38; }
+        tr:hover td { background: #1e2530; }
+        .modal-fondo { display: none; position: fixed; inset: 0; background: #0009; align-items: center; justify-content: center; padding: 18px; z-index: 10; }
+        .modal-fondo.activo { display: flex; }
+        .modal { width: min(700px, 100%); max-height: 90vh; overflow: auto; background: #191e27; border: 1px solid #343c4a; border-radius: 14px; padding: 25px; }
+        .inicio { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .inicio a { display: block; padding: 24px; background: #191e27; border: 1px solid #343c4a; border-radius: 14px; color: white; text-decoration: none; }
+        .inicio a:hover { border-color: #4da3ff; }
+        small { color: #aab3c2; }
+        @media (max-width: 700px) { .grid, .inicio { grid-template-columns: 1fr; } .completo { grid-column: auto; } }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Alta de Renglón de Factura</h1>
+        <div class="subtitulo">Carga de productos o servicios de una factura de compra</div>
+    </header>
+
+    <main>
+        <section class="card">
+            <p class="explicacion">
+                Completá los datos del renglón. El total se calcula automáticamente
+                multiplicando la cantidad por el precio unitario.
+            </p>
+
+            <form id="formulario">
+                <div class="grid">
+                    <div>
+                        <label for="factura">NroFactura</label>
+                        <input type="text" id="factura" required>
+                    </div>
+
+                    <div>
+                        <label for="producto">Cod-Prod</label>
+                        <input type="text" id="producto" required>
+                    </div>
+
+                    <div class="completo">
+                        <label for="descripcion">Descripción producto-servicio</label>
+                        <input type="text" id="descripcion" required>
+                    </div>
+
+                    <div>
+                        <label for="unidad">Unidad de medida</label>
+                        <select id="unidad" required>
+                            <option value="">Seleccione...</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" id="cantidad" min="0" step="0.01" required>
+                    </div>
+
+                    <div>
+                        <label for="precio">PrecioUnit</label>
+                        <input type="number" id="precio" min="0" step="0.01" required>
+                    </div>
+
+                    <div>
+                        <label for="total">TotalRenglon</label>
+                        <input type="text" id="total" readonly>
+                    </div>
+
+                    <div class="completo">
+                        <label for="pdf">PdfComprobante</label>
+                        <input type="file" id="pdf" accept=".pdf">
+                    </div>
+                </div>
+
+                <div class="acciones">
+                    <button type="submit">Guardar renglón</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // 1. Datos de las unidades de medida.
+        const unidades = [
+    { codUni: "LT", descripcion: "Lt" },
+    { codUni: "B30", descripcion: "bls30kg" },
+    { codUni: "B20", descripcion: "bls20kg" },
+    { codUni: "C2", descripcion: "caja2lts" }
+];
+
+        // 2. Cargamos las unidades en el select.
+        const selectUnidad = document.getElementById("unidad");
+
+        unidades.forEach(function (unidad) {
+            const opcion = document.createElement("option");
+            opcion.value = unidad.codUni;
+            opcion.textContent = unidad.codUni + " - " + unidad.descripcion;
+            selectUnidad.appendChild(opcion);
+        });
+
+        // 3. Calculamos el total del renglón.
+        function calcularTotal() {
+            const cantidad = Number(document.getElementById("cantidad").value) || 0;
+            const precio = Number(document.getElementById("precio").value) || 0;
+            const total = cantidad * precio;
+
+            document.getElementById("total").value = total.toFixed(2);
+        }
+
+        // 4. Recalculamos cuando cambia la cantidad o el precio.
+        document.getElementById("cantidad").addEventListener("input", calcularTotal);
+        document.getElementById("precio").addEventListener("input", calcularTotal);
+
+        // 5. Validamos el formulario al presionar Guardar.
+        const formulario = document.getElementById("formulario");
+
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (formulario.checkValidity()) {
+                alert("Renglón guardado correctamente");
+            } else {
+                formulario.reportValidity();
+            }
+        });
+    </script>
+</body>
+</html>
