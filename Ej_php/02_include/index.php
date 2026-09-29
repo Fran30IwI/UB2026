@@ -16,13 +16,9 @@
 
 <section>
 <h2>¿Que estamos haciendo?</h2>
-<p>Las asignaciones de dos personas estan guardadas en <strong>asignaciones.php</strong>.
-El archivo principal usa <strong>include</strong> para incorporar ese codigo.</p>
+
 
 <?php
-// Sin el include, las variables de asignaciones.php no existirian en este archivo.
-// Una vez ejecutado include, ya podemos utilizarlas.
-
 include "asignaciones.php";
 
 echo "<div class='person'>";
