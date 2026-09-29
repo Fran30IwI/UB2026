@@ -20,12 +20,11 @@
 <h2>1. Texto fuera de PHP</h2>
 
 Este texto esta escrito en el archivo PHP pero esta fuera de las marcas de PHP.
-El procesador lo envia directamente al navegador como parte de la respuesta HTTP.
 
 <hr>
 
 <?php
-echo "<p><strong>2. Texto HTML generado desde PHP:</strong> este texto fue escrito dentro de PHP utilizando echo.</p>";
+echo "<p><strong>2. Texto HTML generado desde PHP:</strong> </p>";
 
 echo "<hr>";
 
@@ -46,7 +45,6 @@ echo "<div class='result'>Tipo de <span class='var'>\$c</span>: <span class='typ
 echo "<div class='result'><span class='var'>\$d</span> = <span class='value'>$d</span></div>";
 echo "<div class='result'>Tipo de <span class='var'>\$d</span>: <span class='type'>" . gettype($d) . "</span></div>";
 
-echo "<p class='small'>Segun la consigna del video, si se intentara hacer una operacion con variables de tipos diferentes, se debe considerar el comportamiento de tipos indicado en clase.</p>";
 
 echo "<hr>";
 
