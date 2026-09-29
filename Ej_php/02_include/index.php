@@ -25,8 +25,6 @@ El archivo principal usa <strong>include</strong> para incorporar ese codigo.</p
 
 include "asignaciones.php";
 
-echo "<div class='notice'>El include ya incorporo las variables del otro archivo.</div>";
-
 echo "<div class='person'>";
 echo "<strong>" . $persona1["nombre"] . " " . $persona1["apellido"] . "</strong><br>";
 echo "Fecha de nacimiento: " . $persona1["fechaNacimiento"];
