@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectura de formularios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="wrap">
+            <h1>Ejercicio 05 - Formularios</h1>
+        </div>
+    </header>
+
+    <main class="wrap">
+
+        <a class="back" href="../index.php">← Volver al indice</a>
+
+        <section>
+
+            <p>
+                Formulario HTML enviado al PHP que figura en el atributo
+                <strong>action</strong>.
+            </p>
+
+            <form action="respuesta.php" method="post">
+
+                <label for="id_usuario">ID de usuario</label>
+                <input type="text" id="id_usuario" name="id_usuario" required>
+
+                <label for="contrasena">Contraseña</label>
+                <input type="text" id="contrasena" name="contrasena" required>
+
+                <button type="submit">Enviar formulario</button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

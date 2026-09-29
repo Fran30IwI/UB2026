@@ -1,0 +1,19 @@
+
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#edf2ff;color:#1e293b}
+.wrap{width:min(980px,92%);margin:auto}
+header{background:#273c75;color:white;padding:34px 0}
+h1{margin:0}
+.back{display:inline-block;margin:22px 0;color:#273c75;text-decoration:none;font-weight:bold}
+section{background:#fff;border-radius:13px;padding:23px;margin:0 0 18px;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+h2{margin-top:0;color:#273c75}
+hr{border:0;border-top:1px solid #d8dee9;margin:20px 0}
+.result{margin:9px 0;padding:11px 13px;border-radius:8px;background:#f8fafc}
+.var{color:#273c75;font-weight:bold}
+.value{color:#111827}
+.type{color:#64748b}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left}
+th{background:#f8fafc}
+.small{color:#64748b;line-height:1.55}
+.code{background:#111827;color:#e5e7eb;padding:15px;border-radius:9px;font-family:Consolas,monospace;overflow:auto}
